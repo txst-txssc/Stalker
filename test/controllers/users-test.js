@@ -258,7 +258,7 @@ describe('Users', function() {
         makePostReq('/users', {name: 'Test User'}, function(err, res, body) {
           var id = JSON.parse(body)._id;
 
-          makePutReq('/users/' + id, {name: 'Johnny Walker', location: 'Office'}, function(err, res, obj) {
+          makePutReq('/users/' + id, {name: 'Johnny Walker', location: 'Office', returning: 'Never' }, function(err, res, obj) {
             result = res;
             data = JSON.parse(obj);
             done();
@@ -276,6 +276,10 @@ describe('Users', function() {
 
       it('should set location', function() {
         data.location.should.equal('Office');
+      });
+
+      it('should set returning', function() {
+        data.should.have.property('returning', 'Never');
       });
     });
 
@@ -301,6 +305,32 @@ describe('Users', function() {
 
       it('should clear location', function() {
         data.location.should.equal('');
+      });
+    });
+
+    // Test updating returning
+    describe('empty returning', function() {
+      var result, data;
+
+      before(function(done) {
+        // add a user to ensure a good ID
+        makePostReq('/users', {name: 'Test User', returning: 'Today'}, function(err, res, body) {
+          var id = JSON.parse(body)._id;
+
+          makePutReq('/users/' + id, {returning: ''}, function(err, res, body) {
+            result = res;
+            data = JSON.parse(body);
+            done();
+          });
+        });
+      });
+
+      it('should return a 200 status code', function() {
+        result.should.have.property('statusCode', 200);
+      });
+
+      it('should clear returning', function() {
+        data.should.have.property('returning', '');
       });
     });
 
