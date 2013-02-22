@@ -36,7 +36,7 @@ beforeEach(function(done) {
 
 function makeGetReq(uri, cb) {
   request.get({
-    uri: 'http://127.0.0.1:9090' + uri,
+    uri: 'http://localhost:9090' + uri,
     headers: {
       'content-type': 'application/json'
     }
@@ -45,7 +45,7 @@ function makeGetReq(uri, cb) {
 
 function makePostReq(uri, data, cb) {
   request.post({
-    uri: 'http://127.0.0.1:9090' + uri,
+    uri: 'http://localhost:9090' + uri,
     body: JSON.stringify(data),
     headers: {
       'content-type': 'application/json'
@@ -55,7 +55,7 @@ function makePostReq(uri, data, cb) {
 
 function makePutReq(uri, data, cb) {
   request.put({
-    uri: 'http://127.0.0.1:9090' + uri,
+    uri: 'http://localhost:9090' + uri,
     body: JSON.stringify(data),
     headers: {
       'content-type': 'application/json'
@@ -65,7 +65,7 @@ function makePutReq(uri, data, cb) {
 
 function makeDeleteReq(uri, cb) {
   request.del({
-    uri: 'http://127.0.0.1:9090' + uri,
+    uri: 'http://localhost:9090' + uri,
     headers: {
       'content-type': 'application/json'
     }
