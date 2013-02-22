@@ -7,27 +7,17 @@ var should = require('should'),
     flatiron = require('flatiron'),
     controllers = require('../../lib/controllers'),
     redis = require('redis'),
-    events = require('events').EventEmitter,
-    pubEvents = require('node-redis-events').Publisher,
+    Emitter = require('node-redis-events'),
     url = require('url'),
     app = flatiron.app;
 
 app.use(flatiron.plugins.http);
-var eventEmitter = new events();
+var eventEmitter = new Emitter();
 var model_events = [
   'user:save',
   'user:update'
 ];
 
-var redisString = process.env.REDIS_URI || "redis://127.0.0.1:6379",
-    redisURI = url.parse(redisString, true);
-
-var pubSubConfig = {
-  redis: redis.createClient(parseInt(redisURI.port, 10), redisURI.hostname),
-  emitter: eventEmitter,
-  namespace: 'stalker'
-};
-var publisher = new pubEvents(pubSubConfig, model_events);
 app.controllers = controllers(eventEmitter);
 app.router.path(/users/i, app.controllers.User);
 app.start(9090);

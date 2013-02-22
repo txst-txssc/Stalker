@@ -4,7 +4,6 @@
 
 var should = require('should'),
     redis = require('redis'),
-    pubEvents = require('node-redis-events').Publisher,
     events = require('events').EventEmitter,
     conn = redis.createClient();
 

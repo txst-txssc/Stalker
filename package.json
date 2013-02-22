@@ -1,14 +1,14 @@
 {
-  "name": "Stalker-O-Matic",
+  "name": "stalker",
   "description": "Keep track of who's in the office",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "author": "Cody Stoltman <particlebanana@gmail.com>",
   "private": true,
   "dependencies": {
     "flatiron": ">= 0.1.16",
     "union": ">= 0.3.0",
     "resourceful-redis": ">= 0.1.x",
-    "node-redis-events": "git://github.com/vanetix/node-redis-events.git"
+    "node-redis-events": "~0.9.0"
   },
   "devDependencies": {
     "mocha": ">= 1.0.1",

@@ -1,43 +1,28 @@
-var flatiron = require('flatiron'),
-    controllers = require('./lib/controllers'),
+var url = require('url'),
     redis = require('redis'),
-    events = require('events').EventEmitter,
-    pubEvents = require('node-redis-events').Publisher,
-    url = require('url'),
+    flatiron = require('flatiron'),
     app = flatiron.app;
+    Emitter = require('node-redis-events'),
+    controllers = require('./lib/controllers');
 
 app.use(flatiron.plugins.http);
 
 /**
  * CORS header
  */
+
 app.http.headers['Access-Control-Allow-Origin'] = '*';
 
 /**
- * Use Node-Redis-Events to publish
- * events to subscribers
+ * configure event emitter namespace
  */
 
-var eventEmitter = new events();
-
-var model_events = [
-  'user:save',
-  'user:update'
-];
-
-var redisString = process.env.REDIS_URI || "redis://127.0.0.1:6379",
-    redisURI = url.parse(redisString, true);
-
-var pubSubConfig = {
-  redis: redis.createClient(parseInt(redisURI.port, 10), redisURI.hostname),
-  emitter: eventEmitter,
+var emitter = new Emitter({
   namespace: 'stalker'
-};
-
-var publisher = new pubEvents(pubSubConfig, model_events);
+});
 
 // Route request to correct controller
-app.controllers = controllers(eventEmitter);
+app.controllers = controllers(emitter);
 
 app.router.path(/users/i, app.controllers.User);
 
