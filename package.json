@@ -7,6 +7,7 @@
   "dependencies": {
     "flatiron": ">= 0.1.16",
     "union": ">= 0.3.0",
+    "redis": "~0.8.2",
     "resourceful-redis": ">= 0.1.x",
     "node-redis-events": "~0.9.0"
   },
